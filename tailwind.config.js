@@ -2,8 +2,10 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-  ],  theme: {
-    extend: {},
+  ], theme: {
+    fontFamily: {
+      custom1: ["FSAlbert", "FSAlbert-Regular"],
+    },
   },
   plugins: [],
 }
