@@ -110,7 +110,6 @@ export default function Content() {
   return (
     <>
       <div className="flex flex-col m-10">
-        <div>{country}</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {displayedCountries.map((country, index) => (
             <div key={index} className="flex flex-col w-full gap-x-5">
