@@ -20,30 +20,33 @@ export default function Content() {
       const countriesToSort = await response.json();
 
       let filteredCountries = countriesToSort;
+
       if (region !== "all") {
         filteredCountries = countriesToSort.filter(
           (country) => country.region === region
         );
+      } else if (country) {
+        filteredCountries = filteredCountries.filter(
+          (countr) => countr.name.common.toLowerCase() === country.toLowerCase()
+          );
       }
 
       const sortedCountries = filteredCountries.sort((a, b) =>
         a.name.common.localeCompare(b.name.common)
       );
 
-
       setAllCountries(sortedCountries);
-      setSelectedCountries(allCountries);
+      setSelectedCountries(sortedCountries);
     };
 
-
-
-
     fetchData();
+  }, [country, region, setSelectedCountries]);
 
+  useEffect(() => {
     const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
     const endIndex = startIndex + POSTS_PER_PAGE;
     setDisplayedCountries(allCountries.slice(startIndex, endIndex));
-  }, [allCountries, currentPage, region, selectedCountries, setSelectedCountries]);
+  }, [allCountries, currentPage]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -66,7 +69,10 @@ export default function Content() {
     );
 
     if (centralEnd - centralStart + 1 < CENTRAL_PAGES - 1) {
-      centralEnd = Math.min(centralEnd + (CENTRAL_PAGES - 1 - (centralEnd - centralStart + 1)), totalPages - 1);
+      centralEnd = Math.min(
+        centralEnd + (CENTRAL_PAGES - 1 - (centralEnd - centralStart + 1)),
+        totalPages - 1
+      );
     }
 
     const pages = [firstPage];
@@ -104,12 +110,10 @@ export default function Content() {
   return (
     <>
       <div className="flex flex-col m-10">
-        {/* <div>
-          {country}
-        </div> */}
+        <div>{country}</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {displayedCountries.map((country, index) => (
-            <div key={index} className="flex flex-col w-full  gap-x-5">
+            <div key={index} className="flex flex-col w-full gap-x-5">
               <div className="p-4">
                 <img
                   loading="lazy"
@@ -141,11 +145,8 @@ export default function Content() {
             </div>
           ))}
         </div>
-        <div className="mb-10">
-          {renderPaginationButtons()}
-        </div>
+        <div className="mb-10">{renderPaginationButtons()}</div>
       </div>
-
     </>
   );
 }

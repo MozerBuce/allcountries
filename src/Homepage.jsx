@@ -6,7 +6,7 @@ import { ThemeContext } from './context/context';
 export default function Homepage() {
 
 const [region, setRegion] = useState('all'); 
-const [country, setCountry] = useState('none'); 
+const [country, setCountry] = useState(); 
 const [selectedCountries, setSelectedCountries] = useState([]); 
 
     return (

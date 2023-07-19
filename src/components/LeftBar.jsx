@@ -3,10 +3,11 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/context";
 
 export default function LeftBar() {
-  const { region, setRegion } = useContext(ThemeContext);
+  const { region, setRegion, setCountry } = useContext(ThemeContext);
 
   const handleRegion = (value) => {
     setRegion(value);
+    setCountry('');
   };
 
   return (
